@@ -13,6 +13,15 @@
 	(is (= [["k" "v"] ["x" "y"]] (keyval "k=v x=y")))
 	(is (= [["k" "v"] ["x" "y"] ["somedog" "mycat"]]
 		(keyval "k=v x=y somedog=mycat")))
+	(is (= [["someKey" "this will be a dooze\\=yep"]]
+		(keyval "someKey=this will be a dooze\\=yep")))
+	(is (= [["x" "y"] ["someKey" "this will be a dooze\\=yep"]]
+		(keyval "x=y someKey=this will be a dooze\\=yep")))
+	(is (=
+		[["eventId" "757012"] ["mrt" "1122339894099"]
+			["categorySignificance" "/Normal"]]
+		(keyval "eventId=757012 mrt=1122339894099 categorySignificance=/Normal")
+		))
 	)
 
 (deftest test-symval

@@ -7,7 +7,13 @@
 	)
 
 (defn keyval [s]
-	(map (fn [n] (take-last 2 n)) (re-seq #"(\w+)\=(.+?)" s))
+    ; (map (fn [n] (take-last 2 n)) (re-seq #"(\w+)=(.+?)(?=(?: \w=|$))" s))
+    ; (map (fn [n] (take-last 2 n)) (split s #"(?<!\\)="))
+	; 	(split s #" (?=\w+=)")
+	(map
+		#(take-last 2 %)
+		(map #(re-find #"(\w+)=(.*)" %)  (split s #" (?=\w+=)"))
+		)
 	)
 
 (defn symval [k v] [(keyword k) v])
@@ -22,6 +28,7 @@
 
 (defn -main
 	[]
-	(println (cef-parse cefsample))
-	(println (cef-parse biggersample))
+	(println (split "k=v mydog=the cat.is-a beast" #" (?=\w+=)"))
+	; (println (cef-parse cefsample))
+	; (println (cef-parse biggersample))
 	)
